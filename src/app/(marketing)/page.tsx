@@ -1,6 +1,5 @@
 import {
   BookOpen,
-  Check,
   ChevronRight,
   GraduationCap,
   Mic,
@@ -16,6 +15,7 @@ import { ButtonLink } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardBody } from "@/components/ui/card";
 import { AI_TUTOR_ENABLED, APP, CEFR_LEVELS, LEVEL_LABELS, PLANS } from "@/lib/constants/app";
+import { cn } from "@/lib/utils/cn";
 
 // No `title` here: the root layout's `title.default` already provides the
 // exact SEO title for this page. Setting one would apply the `%s · OnTalk`
@@ -24,30 +24,42 @@ export const metadata: Metadata = {
   description: APP.description,
 };
 
+const FEATURE_TONES = {
+  primary: "bg-primary-subtle text-primary",
+  success: "bg-success-subtle text-success",
+  warning: "bg-warning-subtle text-warning",
+  dark: "bg-dark text-dark-foreground",
+  danger: "bg-danger-subtle text-danger",
+} as const;
+
 const FEATURES = [
   {
     icon: GraduationCap,
     title: "Structured Lessons",
     description:
       "Short, focused lessons that build on each other — from your first introduction to a mock job interview.",
+    tone: "primary",
   },
   {
     icon: BookOpen,
     title: "Smart Vocabulary Review",
     description:
       "A spaced-repetition deck that brings words back right before you'd forget them, not on a fixed schedule.",
+    tone: "success",
   },
   {
     icon: Mic,
     title: "Speaking Practice",
     description:
       "Listen to a model phrase, say it back, and see exactly which words matched — right in your browser.",
+    tone: "warning",
   },
   {
     icon: Sparkles,
     title: "AI English Tutor",
     description:
       "Chat, get grammar coaching, or run a mock interview with a tutor that adapts to your level.",
+    tone: "dark",
     comingSoon: !AI_TUTOR_ENABLED,
   },
   {
@@ -55,8 +67,9 @@ const FEATURES = [
     title: "Progress Tracking",
     description:
       "XP, streaks, and a weekly activity chart so you can see the habit forming, not just guess at it.",
+    tone: "danger",
   },
-];
+] satisfies { icon: typeof GraduationCap; title: string; description: string; tone: keyof typeof FEATURE_TONES; comingSoon?: boolean }[];
 
 const STEPS = [
   { title: "Choose your level", description: "Tell us where you're starting from — or let us guess." },
@@ -111,7 +124,12 @@ export default function LandingPage() {
             </div>
           </div>
 
-          <PhoneShowcase />
+          <div className="relative" aria-hidden>
+            <span className="absolute top-2 left-6 size-8 rounded-full bg-success-subtle sm:left-10" />
+            <span className="absolute right-8 bottom-6 size-5 rounded-full bg-accent-subtle sm:right-14" />
+            <span className="absolute top-1/3 right-2 size-3 rounded-full bg-primary/40" />
+            <PhoneShowcase />
+          </div>
         </div>
       </section>
 
@@ -131,14 +149,15 @@ export default function LandingPage() {
               <Card key={feature.title} className="p-6">
                 <div className="flex items-start justify-between gap-2">
                   <span
-                    className="grid size-11 place-items-center rounded-xl bg-primary-subtle text-primary"
+                    className={cn(
+                      "grid size-11 place-items-center rounded-2xl",
+                      FEATURE_TONES[feature.tone],
+                    )}
                     aria-hidden
                   >
                     <feature.icon className="size-5" />
                   </span>
-                  {"comingSoon" in feature && feature.comingSoon && (
-                    <Badge tone="primary">Coming soon</Badge>
-                  )}
+                  {feature.comingSoon && <Badge tone="primary">Coming soon</Badge>}
                 </div>
                 <h3 className="mt-4 text-base font-semibold">{feature.title}</h3>
                 <p className="mt-1.5 text-sm text-muted-foreground">
@@ -150,62 +169,37 @@ export default function LandingPage() {
         </div>
       </section>
 
-      <section id="how-it-works" className="py-16 sm:py-24">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6">
-          <div className="mx-auto max-w-xl text-center">
-            <h2 className="text-3xl font-semibold tracking-tight">How it works</h2>
-          </div>
-
-          <ol className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {STEPS.map((step, index) => (
-              <li key={step.title} className="relative">
-                <span
-                  className="grid size-9 place-items-center rounded-full bg-primary text-sm font-semibold text-primary-foreground"
-                  aria-hidden
-                >
-                  {index + 1}
-                </span>
-                <h3 className="mt-3 text-base font-semibold">{step.title}</h3>
-                <p className="mt-1 text-sm text-muted-foreground">
-                  {step.description}
-                </p>
-              </li>
-            ))}
-          </ol>
-        </div>
-      </section>
-
-      <section className="border-t border-border bg-surface py-16 sm:py-24">
+      <section id="how-it-works" className="border-t border-border bg-surface py-16 sm:py-24">
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
             <LearnerPhoto />
             <div>
-              <h2 className="text-3xl font-semibold tracking-tight">
-                Practice fits into the time you already have
-              </h2>
-              <p className="mt-4 text-muted-foreground">
-                No classroom, no schedule to plan around. Open OnTalk on your
-                phone during a commute, a coffee break, or the last ten
-                minutes before bed, and pick up exactly where you left off.
+              <h2 className="text-3xl font-semibold tracking-tight">How it works</h2>
+              <p className="mt-3 text-muted-foreground">
+                No classroom, no schedule to plan around. Open OnTalk during a
+                commute, a coffee break, or the last ten minutes before bed.
               </p>
-              <ul className="mt-6 space-y-3">
-                {[
-                  "Short lessons that fit a spare five minutes",
-                  "Vocabulary review that adapts to what you're forgetting",
-                  "Speaking practice you can do quietly, headphones in",
-                ].map((item) => (
-                  <li key={item} className="flex items-start gap-2.5 text-sm text-foreground">
+
+              <ol className="mt-8 space-y-6">
+                {STEPS.map((step, index) => (
+                  <li key={step.title} className="flex gap-4">
                     <span
-                      className="mt-0.5 grid size-5 shrink-0 place-items-center rounded-full bg-primary-subtle text-primary"
+                      className="grid size-9 shrink-0 place-items-center rounded-full bg-primary text-sm font-semibold text-primary-foreground"
                       aria-hidden
                     >
-                      <Check className="size-3" />
+                      {index + 1}
                     </span>
-                    {item}
+                    <div>
+                      <h3 className="text-base font-semibold">{step.title}</h3>
+                      <p className="mt-1 text-sm text-muted-foreground">
+                        {step.description}
+                      </p>
+                    </div>
                   </li>
                 ))}
-              </ul>
-              <ButtonLink href="/register" className="mt-7">
+              </ol>
+
+              <ButtonLink href="/register" className="mt-8">
                 Start Learning Free
                 <ChevronRight className="size-4" aria-hidden />
               </ButtonLink>
@@ -330,15 +324,20 @@ export default function LandingPage() {
         </div>
       </section>
 
-      <section className="py-16 sm:py-24">
-        <div className="mx-auto max-w-3xl px-4 text-center sm:px-6">
-          <h2 className="text-3xl font-semibold tracking-tight">
+      <section className="px-4 py-16 sm:px-6 sm:py-24">
+        <div className="mx-auto max-w-5xl overflow-hidden rounded-[2.5rem] bg-primary px-6 py-14 text-center sm:px-16 sm:py-20">
+          <h2 className="text-3xl font-semibold tracking-tight text-primary-foreground sm:text-4xl">
             Ready to start?
           </h2>
-          <p className="mx-auto mt-3 max-w-md text-muted-foreground">
+          <p className="mx-auto mt-3 max-w-md text-primary-foreground/85">
             Your first lesson takes less than ten minutes.
           </p>
-          <ButtonLink href="/register" size="lg" className="mt-6">
+          <ButtonLink
+            href="/register"
+            size="lg"
+            variant="dark"
+            className="mt-7"
+          >
             Start Learning Free
             <ChevronRight className="size-4" aria-hidden />
           </ButtonLink>
