@@ -10,7 +10,7 @@ import {
 } from "lucide-react";
 import type { Metadata } from "next";
 
-import { LearnerIllustration } from "@/components/marketing/learner-illustration";
+import { LearnerPhoto } from "@/components/marketing/learner-photo";
 import { PhoneShowcase } from "@/components/marketing/phone-showcase";
 import { ButtonLink } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -178,7 +178,7 @@ export default function LandingPage() {
       <section className="border-t border-border bg-surface py-16 sm:py-24">
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
-            <LearnerIllustration className="mx-auto w-full max-w-sm" />
+            <LearnerPhoto />
             <div>
               <h2 className="text-3xl font-semibold tracking-tight">
                 Practice fits into the time you already have
