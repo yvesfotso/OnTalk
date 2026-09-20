@@ -6,7 +6,30 @@ export function Card({ className, ...props }: ComponentProps<"div">) {
   return (
     <div
       className={cn(
-        "rounded-card border border-border bg-surface shadow-card",
+        "rounded-card border border-border/60 bg-surface shadow-card",
+        className,
+      )}
+      {...props}
+    />
+  );
+}
+
+/** A Card in the muted "well" tone the reference uses for grouped tiles. */
+export function SubtleCard({ className, ...props }: ComponentProps<"div">) {
+  return (
+    <div
+      className={cn("rounded-card bg-subtle", className)}
+      {...props}
+    />
+  );
+}
+
+/** The one high-contrast dark card per section, e.g. a standout stat. */
+export function DarkCard({ className, ...props }: ComponentProps<"div">) {
+  return (
+    <div
+      className={cn(
+        "rounded-card bg-dark text-dark-foreground shadow-raised",
         className,
       )}
       {...props}

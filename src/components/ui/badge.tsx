@@ -23,12 +23,31 @@ const badgeVariants = cva(
   },
 );
 
+const DOT_CLASSES = {
+  neutral: "bg-faint-foreground",
+  primary: "bg-primary",
+  success: "bg-success",
+  accent: "bg-accent",
+  danger: "bg-danger",
+} as const;
+
 interface BadgeProps
   extends ComponentProps<"span">,
-    VariantProps<typeof badgeVariants> {}
+    VariantProps<typeof badgeVariants> {
+  /** Small status dot before the label, matching a "Completed / Pending" pill. */
+  dot?: boolean;
+}
 
-export function Badge({ className, tone, size, ...props }: BadgeProps) {
+export function Badge({ className, tone, size, dot, children, ...props }: BadgeProps) {
   return (
-    <span className={cn(badgeVariants({ tone, size }), className)} {...props} />
+    <span className={cn(badgeVariants({ tone, size }), className)} {...props}>
+      {dot && (
+        <span
+          className={cn("size-1.5 shrink-0 rounded-full", DOT_CLASSES[tone ?? "neutral"])}
+          aria-hidden
+        />
+      )}
+      {children}
+    </span>
   );
 }

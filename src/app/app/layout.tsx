@@ -21,14 +21,14 @@ export default async function AppLayout({
   const { display_name: displayName, xp, streak } = session.profile;
 
   return (
-    <div className="min-h-dvh bg-subtle">
+    <div className="min-h-dvh bg-background">
       <AppSidebar displayName={displayName} xp={xp} streak={streak} />
       <MobileHeader displayName={displayName} xp={xp} streak={streak} />
 
-      <div className="lg:pl-64">
+      <div className="lg:pl-[calc(16rem+2rem)]">
         <main
           id="main"
-          className="mx-auto w-full max-w-6xl px-4 pt-6 pb-24 sm:px-6 lg:pb-12"
+          className="mx-auto w-full max-w-6xl px-4 pt-6 pb-24 sm:px-6 lg:pt-8 lg:pb-12"
         >
           {children}
         </main>

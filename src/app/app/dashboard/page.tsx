@@ -1,27 +1,14 @@
-import {
-  BookOpen,
-  ChevronRight,
-  Clock,
-  Flame,
-  GraduationCap,
-  Mic,
-  Sparkles,
-  Zap,
-} from "lucide-react";
+import { BookOpen, ChevronRight, Clock, Flame, GraduationCap, Mic, Sparkles, Trophy, Zap } from "lucide-react";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 
+import { LessonsTable } from "@/components/dashboard/lessons-table";
+import { PracticeTip } from "@/components/dashboard/practice-tip";
 import { WeeklyChart } from "@/components/progress/weekly-chart";
 import { Badge } from "@/components/ui/badge";
 import { ButtonLink } from "@/components/ui/button";
-import {
-  Card,
-  CardBody,
-  CardDescription,
-  CardTitle,
-  InteractiveCard,
-} from "@/components/ui/card";
+import { Card, CardBody, InteractiveCard } from "@/components/ui/card";
 import { ProgressBar } from "@/components/ui/progress-bar";
 import { StatCard } from "@/components/ui/stat-card";
 import { EmptyState } from "@/components/ui/states";
@@ -68,6 +55,15 @@ export default async function DashboardPage() {
         )
       : 0;
 
+  const weeklyMinutes = week.reduce((sum, day) => sum + day.minutes, 0);
+  const weeklyXp = week.reduce((sum, day) => sum + day.xp, 0);
+
+  // Recommended lesson first, then the rest in curriculum order — five rows,
+  // the same rhythm as the reference's transaction list.
+  const tableLessons = recommended
+    ? [recommended, ...lessons.filter((l) => l.id !== recommended.id)]
+    : lessons;
+
   return (
     <div className="space-y-6">
       <header className="flex flex-wrap items-center justify-between gap-4">
@@ -76,132 +72,168 @@ export default async function DashboardPage() {
             {greeting()}, {profile.display_name} 👋
           </h1>
           <p className="mt-1 text-sm text-muted-foreground">
-            Ready for today&apos;s English practice?
+            Control your streak, XP, and daily practice.
           </p>
         </div>
-        <Badge tone="primary" size="md">
-          Level {profile.english_level}
-        </Badge>
+        <div className="flex items-center gap-2">
+          <Badge tone="primary" size="md">
+            Level {profile.english_level}
+          </Badge>
+          {recommended && (
+            <ButtonLink href={`/app/lessons/${recommended.slug}`}>
+              {recommended.progress ? "Continue learning" : "Start lesson"}
+              <ChevronRight className="size-4" aria-hidden />
+            </ButtonLink>
+          )}
+        </div>
       </header>
 
-      <section aria-label="Your statistics">
-        <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
-          <StatCard
-            label="Day streak"
-            value={profile.streak}
-            icon={Flame}
-            tone="accent"
-          />
-          <StatCard label="Total XP" value={profile.xp} icon={Zap} tone="primary" />
-          <StatCard
-            label="Lessons done"
-            value={lessonsCompleted}
-            icon={GraduationCap}
-            tone="success"
-          />
-          <StatCard
-            label="Words learned"
-            value={counts.wordsLearned}
-            icon={BookOpen}
-            tone="neutral"
-            hint={`${counts.wordsTotal} in your deck`}
-          />
-        </div>
-      </section>
-
       <div className="grid gap-4 lg:grid-cols-3">
-        <section className="lg:col-span-2" aria-label="Continue learning">
-          {recommended ? (
-            <Card className="h-full">
-              <CardBody className="flex h-full flex-col">
-                <div className="flex items-center gap-2">
-                  <Badge tone="primary">{recommended.level}</Badge>
-                  <Badge>{recommended.topic}</Badge>
+        <section className="lg:col-span-2" aria-label="This week">
+          <Card className="h-full">
+            <CardBody className="space-y-5">
+              <div className="flex items-start justify-between gap-3">
+                <div>
+                  <h2 className="text-base font-semibold text-foreground">
+                    Your week
+                  </h2>
+                  <p className="mt-0.5 text-sm text-muted-foreground">
+                    Track your performance.
+                  </p>
                 </div>
+                <Badge>Last 7 days</Badge>
+              </div>
 
-                <h2 className="mt-3 text-xl font-semibold tracking-tight">
-                  {recommended.title}
-                </h2>
-                <p className="mt-1 text-sm text-muted-foreground">
-                  {recommended.description}
-                </p>
-
-                <div className="mt-3 flex items-center gap-4 text-xs text-muted-foreground">
-                  <span className="inline-flex items-center gap-1">
+              <div className="flex flex-wrap gap-6">
+                <div>
+                  <p className="flex items-center gap-1.5 text-xs text-muted-foreground">
                     <Clock className="size-3.5" aria-hidden />
-                    {recommended.estimated_minutes} min
-                  </span>
-                  <span className="inline-flex items-center gap-1">
-                    <Zap className="size-3.5 text-accent" aria-hidden />
-                    {recommended.xp_reward} XP
-                  </span>
+                    Minutes studied
+                  </p>
+                  <p className="mt-1 text-2xl font-semibold tabular-nums text-foreground">
+                    {weeklyMinutes}
+                  </p>
                 </div>
-
-                {(recommended.progress?.progress_percent ?? 0) > 0 && (
-                  <ProgressBar
-                    className="mt-4"
-                    value={recommended.progress?.progress_percent ?? 0}
-                    label="Your progress"
-                    size="sm"
-                  />
-                )}
-
-                <div className="mt-auto pt-5">
-                  <ButtonLink
-                    href={`/app/lessons/${recommended.slug}`}
-                    size="lg"
-                  >
-                    {recommended.progress ? "Continue learning" : "Start lesson"}
-                    <ChevronRight className="size-4" aria-hidden />
-                  </ButtonLink>
+                <div>
+                  <p className="flex items-center gap-1.5 text-xs text-muted-foreground">
+                    <Zap className="size-3.5 text-primary" aria-hidden />
+                    XP earned
+                  </p>
+                  <p className="mt-1 text-2xl font-semibold tabular-nums text-foreground">
+                    {weeklyXp}
+                  </p>
                 </div>
-              </CardBody>
-            </Card>
-          ) : (
-            <EmptyState
-              icon={GraduationCap}
-              title="You've finished the demo curriculum"
-              description="More lessons are on the way. In the meantime, keep your vocabulary sharp."
-              action={
-                <ButtonLink href="/app/vocabulary/review">
-                  Review vocabulary
-                </ButtonLink>
-              }
-            />
-          )}
+              </div>
+
+              <WeeklyChart days={week} goalMinutes={profile.daily_minutes_goal} />
+            </CardBody>
+          </Card>
         </section>
 
-        <section aria-label="Today's goal">
+        <section aria-label="Activity">
           <Card className="h-full">
-            <CardBody className="flex h-full flex-col">
-              <CardTitle as="h2">Daily goal</CardTitle>
-              <CardDescription>
-                {today.minutes_studied} / {profile.daily_minutes_goal} minutes
-              </CardDescription>
-
-              <div className="mt-5">
-                <ProgressBar
-                  value={goalPercent}
-                  tone={goalPercent >= 100 ? "success" : "primary"}
-                  hideValue
-                />
-                <p className="mt-2 text-sm text-muted-foreground">
-                  {goalPercent >= 100
-                    ? "Goal reached. Nice work today."
-                    : `${profile.daily_minutes_goal - today.minutes_studied} minutes to go.`}
+            <CardBody className="space-y-4">
+              <div>
+                <h2 className="text-base font-semibold text-foreground">
+                  Activity
+                </h2>
+                <p className="mt-0.5 text-sm text-muted-foreground">
+                  Track your activity.
                 </p>
               </div>
 
-              <div className="mt-6 flex-1">
-                <p className="mb-3 text-xs font-semibold tracking-wide text-faint-foreground uppercase">
-                  Last 7 days
-                </p>
-                <WeeklyChart days={week} goalMinutes={profile.daily_minutes_goal} />
+              <div className="grid grid-cols-3 gap-2.5">
+                <ActivityTile
+                  icon={BookOpen}
+                  label="Words"
+                  value={counts.wordsLearned}
+                />
+                <ActivityTile
+                  icon={Trophy}
+                  label="Quizzes"
+                  value={counts.quizzesCompleted}
+                />
+                <ActivityTile
+                  icon={Flame}
+                  label="Streak"
+                  value={profile.streak}
+                  dark
+                />
               </div>
             </CardBody>
           </Card>
         </section>
       </div>
+
+      <div className="grid gap-4 lg:grid-cols-3">
+        <div className="space-y-4">
+          <Card className="p-4 sm:p-5">
+            <div className="flex items-start gap-3">
+              <span
+                className="grid size-10 shrink-0 place-items-center rounded-2xl bg-primary-subtle text-primary"
+                aria-hidden
+              >
+                <Clock className="size-5" />
+              </span>
+              <div className="min-w-0 flex-1">
+                <p className="text-2xl leading-tight font-semibold tabular-nums text-foreground">
+                  {today.minutes_studied} min
+                </p>
+                <p className="text-sm text-muted-foreground">Today</p>
+              </div>
+            </div>
+            <ProgressBar
+              className="mt-4"
+              value={goalPercent}
+              tone={goalPercent >= 100 ? "success" : "primary"}
+              label={`Daily goal: ${profile.daily_minutes_goal} min`}
+              size="sm"
+            />
+          </Card>
+          <StatCard label="Lessons done" value={lessonsCompleted} icon={GraduationCap} tone="success" />
+        </div>
+
+        <section className="lg:col-span-2" aria-label="Lessons">
+          {tableLessons.length === 0 ? (
+            <EmptyState
+              icon={GraduationCap}
+              title="No lessons yet"
+              description="Lessons will show up here once your curriculum is seeded."
+            />
+          ) : (
+            <Card className="h-full">
+              <CardBody>
+                <div className="mb-1 flex items-center justify-between">
+                  <div>
+                    <h2 className="text-base font-semibold text-foreground">
+                      Lessons
+                    </h2>
+                    <p className="mt-0.5 text-sm text-muted-foreground">
+                      Track your history.
+                    </p>
+                  </div>
+                  <Link
+                    href="/app/learn"
+                    className="text-sm font-medium text-primary hover:underline"
+                  >
+                    View all
+                  </Link>
+                </div>
+                <LessonsTable lessons={tableLessons.slice(0, 5)} />
+              </CardBody>
+            </Card>
+          )}
+        </section>
+      </div>
+
+      <PracticeTip
+        question="How is your English practice going?"
+        answer={
+          today.minutes_studied >= profile.daily_minutes_goal
+            ? "You've hit today's goal already — a quick vocabulary review keeps the streak building."
+            : `You're ${Math.max(profile.daily_minutes_goal - today.minutes_studied, 0)} minutes from today's goal of ${profile.daily_minutes_goal}.`
+        }
+      />
 
       <section aria-label="Practice" className="grid gap-4 sm:grid-cols-3">
         <ActionCard
@@ -234,6 +266,45 @@ export default async function DashboardPage() {
   );
 }
 
+function ActivityTile({
+  icon: Icon,
+  label,
+  value,
+  dark = false,
+}: {
+  icon: typeof BookOpen;
+  label: string;
+  value: number;
+  dark?: boolean;
+}) {
+  return (
+    <div
+      className={
+        dark
+          ? "flex flex-col gap-2 rounded-2xl bg-dark p-3 text-dark-foreground"
+          : "flex flex-col gap-2 rounded-2xl bg-subtle p-3"
+      }
+    >
+      <span
+        className={
+          dark
+            ? "grid size-7 place-items-center rounded-full bg-dark-subtle text-dark-foreground"
+            : "grid size-7 place-items-center rounded-full bg-surface text-primary"
+        }
+        aria-hidden
+      >
+        <Icon className="size-3.5" />
+      </span>
+      <div>
+        <p className="text-lg font-semibold tabular-nums">{value}</p>
+        <p className={dark ? "text-xs text-dark-foreground/60" : "text-xs text-muted-foreground"}>
+          {label}
+        </p>
+      </div>
+    </div>
+  );
+}
+
 function ActionCard({
   href,
   icon: Icon,
@@ -251,7 +322,7 @@ function ActionCard({
     <InteractiveCard className="h-full">
       <Link href={href} className="flex h-full flex-col rounded-card p-5">
         <span
-          className="grid size-10 place-items-center rounded-xl bg-primary-subtle text-primary"
+          className="grid size-10 place-items-center rounded-2xl bg-primary-subtle text-primary"
           aria-hidden
         >
           <Icon className="size-5" />

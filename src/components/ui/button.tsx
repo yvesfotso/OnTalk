@@ -6,7 +6,7 @@ import type { ComponentProps, ReactNode } from "react";
 import { cn } from "@/lib/utils/cn";
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 rounded-xl font-medium transition-colors " +
+  "inline-flex items-center justify-center gap-2 rounded-full font-medium transition-colors " +
     "disabled:pointer-events-none disabled:opacity-50 " +
     "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary",
   {
@@ -18,10 +18,11 @@ const buttonVariants = cva(
           "bg-surface text-foreground border border-border hover:bg-subtle",
         ghost: "text-muted-foreground hover:bg-subtle hover:text-foreground",
         subtle: "bg-primary-subtle text-primary hover:bg-primary-border/60",
+        dark: "bg-dark text-dark-foreground hover:bg-dark-subtle",
         danger: "bg-danger text-white hover:bg-danger/90",
       },
       size: {
-        sm: "h-9 px-3 text-sm",
+        sm: "h-9 px-4 text-sm",
         md: "h-11 px-5 text-sm",
         lg: "h-13 px-7 text-base",
         icon: "h-10 w-10",

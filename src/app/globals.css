@@ -3,53 +3,55 @@
 /*
  * OnTalk design tokens.
  *
- * One strong primary (indigo), a warm accent for streaks/XP, and a neutral
- * slate ramp for everything else. Tailwind v4 turns each --color-* token into
- * utilities automatically: --color-primary gives bg-primary, text-primary,
- * border-primary, and so on.
+ * Warm, rounded fintech-dashboard style: a vivid orange primary, a soft cream
+ * canvas, white cards, and a near-black "dark" surface for the one high-
+ * contrast accent card per section. Tailwind v4 turns each --color-* token
+ * into utilities automatically: --color-primary gives bg-primary,
+ * text-primary, border-primary, and so on.
  */
 @theme {
   --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, -apple-system,
     "Segoe UI", sans-serif;
   --font-mono: var(--font-geist-mono), ui-monospace, monospace;
 
-  --color-background: #ffffff;
+  --color-background: #f6f1ea;
   --color-surface: #ffffff;
-  --color-subtle: #f8fafc;
-  --color-foreground: #0f172a;
-  --color-muted-foreground: #64748b;
-  --color-faint-foreground: #94a3b8;
-  --color-border: #e2e8f0;
-  --color-border-strong: #cbd5e1;
+  --color-subtle: #efe8de;
+  --color-foreground: #1c1815;
+  --color-muted-foreground: #7a7169;
+  --color-faint-foreground: #a39a90;
+  --color-border: #e7ddd0;
+  --color-border-strong: #d8cabb;
 
-  --color-primary: #4f46e5;
-  --color-primary-hover: #4338ca;
+  --color-primary: #f2530f;
+  --color-primary-hover: #d9450a;
   --color-primary-foreground: #ffffff;
-  --color-primary-subtle: #eef2ff;
-  --color-primary-border: #c7d2fe;
+  --color-primary-subtle: #fdeade;
+  --color-primary-border: #f6c6a3;
 
-  --color-accent: #f59e0b;
-  --color-accent-subtle: #fffbeb;
+  --color-accent: #f2530f;
+  --color-accent-subtle: #fdeade;
 
-  --color-success: #059669;
-  --color-success-subtle: #ecfdf5;
-  --color-success-border: #a7f3d0;
+  --color-dark: #211c18;
+  --color-dark-foreground: #fdf6ee;
+  --color-dark-subtle: #3a322b;
+
+  --color-success: #1a8a55;
+  --color-success-subtle: #e5f4eb;
+  --color-success-border: #bfe4cd;
 
   --color-warning: #b45309;
-  --color-warning-subtle: #fffbeb;
+  --color-warning-subtle: #fdeade;
 
-  --color-danger: #dc2626;
-  --color-danger-subtle: #fef2f2;
-  --color-danger-border: #fecaca;
+  --color-danger: #d6432a;
+  --color-danger-subtle: #fbe8e3;
+  --color-danger-border: #f0c2b6;
 
-  --radius-card: 1rem;
+  --radius-card: 1.75rem;
 
-  --shadow-card: 0 1px 2px 0 rgb(15 23 42 / 0.04),
-    0 1px 3px 0 rgb(15 23 42 / 0.06);
-  --shadow-raised: 0 4px 6px -1px rgb(15 23 42 / 0.07),
-    0 2px 4px -2px rgb(15 23 42 / 0.05);
-  --shadow-pop: 0 10px 15px -3px rgb(15 23 42 / 0.08),
-    0 4px 6px -4px rgb(15 23 42 / 0.05);
+  --shadow-card: 0 1px 2px 0 rgb(28 24 21 / 0.04), 0 1px 3px 0 rgb(28 24 21 / 0.05);
+  --shadow-raised: 0 8px 20px -6px rgb(28 24 21 / 0.10), 0 2px 6px -2px rgb(28 24 21 / 0.06);
+  --shadow-pop: 0 20px 32px -8px rgb(28 24 21 / 0.16), 0 6px 12px -4px rgb(28 24 21 / 0.08);
 }
 
 @layer base {

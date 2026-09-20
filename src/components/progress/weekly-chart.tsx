@@ -18,22 +18,17 @@ export function WeeklyChart({ days, goalMinutes }: WeeklyChartProps) {
       <ul className="flex h-32 items-end justify-between gap-2">
         {days.map((day) => {
           const heightPercent = Math.round((day.minutes / peak) * 100);
-          const metGoal = day.minutes >= goalMinutes && goalMinutes > 0;
 
           return (
             <li key={day.date} className="flex flex-1 flex-col items-center gap-2">
               <div className="flex h-full w-full items-end justify-center">
                 <div
                   className={cn(
-                    "w-full max-w-9 rounded-t-md transition-[height] duration-500",
-                    day.minutes === 0
-                      ? "bg-border"
-                      : metGoal
-                        ? "bg-success"
-                        : "bg-primary",
+                    "w-full max-w-9 rounded-full transition-[height] duration-500",
+                    day.minutes === 0 ? "bg-primary-subtle" : "bg-primary",
                   )}
                   style={{
-                    height: day.minutes === 0 ? "4px" : `${Math.max(heightPercent, 6)}%`,
+                    height: day.minutes === 0 ? "8px" : `${Math.max(heightPercent, 8)}%`,
                   }}
                 />
               </div>
