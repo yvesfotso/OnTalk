@@ -98,7 +98,12 @@ export function MobileHeader({ displayName, xp, streak }: MobileHeaderProps) {
                       )}
                     >
                       <Icon className="size-[18px]" aria-hidden />
-                      {item.label}
+                      <span className="min-w-0 flex-1 truncate">{item.label}</span>
+                      {item.comingSoon && (
+                        <span className="shrink-0 rounded-full bg-primary-subtle px-2 py-0.5 text-[10px] font-semibold tracking-wide text-primary uppercase">
+                          Soon
+                        </span>
+                      )}
                     </Link>
                   </li>
                 );

@@ -96,6 +96,27 @@ export const TUTOR_MODES = [
 export type TutorMode = (typeof TUTOR_MODES)[number]["value"];
 
 /**
+ * The AI tutor is fully built (see src/features/tutor, /api/ai/chat) but not
+ * switched on for learners yet — flip this once an AI_API_KEY and usage
+ * budget are ready. Everywhere the tutor is mentioned reads this flag instead
+ * of hard-coding "coming soon" copy in multiple places.
+ */
+export const AI_TUTOR_ENABLED = false;
+
+/**
+ * Outside study material linked from the Learn page. Not hosted by OnTalk —
+ * opens in a new tab.
+ */
+export const EXTERNAL_STUDY_RESOURCES = [
+  {
+    title: "Complete IELTS 4.0–5.0",
+    description:
+      "Student's Book, Teacher's Book, Workbook, and an audio workbook for listening practice.",
+    href: "https://drive.google.com/drive/u/0/folders/15pnRGwjCt7kjOcMUAmvRhDh0jUoZnNUU",
+  },
+] as const;
+
+/**
  * Plan entitlements. Payment is NOT implemented — `plan` is set manually in the
  * database during development. See `src/lib/billing.ts`.
  */
@@ -110,7 +131,7 @@ export const PLANS = {
       "Core lesson path",
       "Vocabulary review",
       "Basic speaking practice",
-      "5 AI tutor messages per day",
+      "5 AI tutor messages per day (coming soon)",
       "Progress tracking",
     ],
   },
@@ -122,7 +143,7 @@ export const PLANS = {
     aiMessagesPerDay: 100,
     features: [
       "Full lesson library",
-      "Generous AI tutor allowance",
+      "Generous AI tutor allowance (coming soon)",
       "Advanced speaking feedback (coming soon)",
       "Detailed progress analytics (coming soon)",
       "Priority support",

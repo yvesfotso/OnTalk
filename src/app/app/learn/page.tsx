@@ -4,6 +4,7 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 
 import { LessonCard } from "@/components/lessons/lesson-card";
+import { StudyResources } from "@/components/lessons/study-resources";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardBody } from "@/components/ui/card";
 import { PageHeader } from "@/components/ui/page-header";
@@ -80,6 +81,8 @@ export default async function LearnPage({ searchParams }: LearnPageProps) {
           />
         </CardBody>
       </Card>
+
+      <StudyResources />
 
       <section aria-label="Filters" className="space-y-3">
         <FilterRow label="Level">

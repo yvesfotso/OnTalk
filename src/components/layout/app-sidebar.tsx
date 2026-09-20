@@ -27,7 +27,17 @@ function NavLink({ item, active }: { item: NavItem; active: boolean }) {
       )}
     >
       <Icon className="size-[18px] shrink-0" aria-hidden />
-      {item.label}
+      <span className="min-w-0 flex-1 truncate">{item.label}</span>
+      {item.comingSoon && (
+        <span
+          className={cn(
+            "shrink-0 rounded-full px-2 py-0.5 text-[10px] font-semibold tracking-wide uppercase",
+            active ? "bg-dark-subtle text-dark-foreground/80" : "bg-primary-subtle text-primary",
+          )}
+        >
+          Soon
+        </span>
+      )}
     </Link>
   );
 }

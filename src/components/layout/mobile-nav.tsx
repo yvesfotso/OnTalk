@@ -31,8 +31,17 @@ export function MobileNav() {
                   active ? "text-primary" : "text-muted-foreground",
                 )}
               >
-                <Icon className="size-5" aria-hidden />
+                <span className="relative">
+                  <Icon className="size-5" aria-hidden />
+                  {item.comingSoon && (
+                    <span
+                      className="absolute -top-0.5 -right-1 size-1.5 rounded-full bg-primary"
+                      aria-hidden
+                    />
+                  )}
+                </span>
                 {item.shortLabel ?? item.label}
+                {item.comingSoon && <span className="sr-only"> (coming soon)</span>}
               </Link>
             </li>
           );

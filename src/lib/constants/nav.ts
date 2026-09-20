@@ -10,12 +10,16 @@ import {
   type LucideIcon,
 } from "lucide-react";
 
+import { AI_TUTOR_ENABLED } from "@/lib/constants/app";
+
 export interface NavItem {
   href: string;
   label: string;
   /** Shorter label for the mobile bar. */
   shortLabel?: string;
   icon: LucideIcon;
+  /** Renders a small "Soon" badge; the link still works. */
+  comingSoon?: boolean;
 }
 
 export const PRIMARY_NAV: NavItem[] = [
@@ -23,7 +27,13 @@ export const PRIMARY_NAV: NavItem[] = [
   { href: "/app/learn", label: "Learn", icon: GraduationCap },
   { href: "/app/vocabulary", label: "Vocabulary", shortLabel: "Words", icon: BookOpen },
   { href: "/app/speaking", label: "Speaking", shortLabel: "Speak", icon: Mic },
-  { href: "/app/tutor", label: "AI Tutor", shortLabel: "Tutor", icon: Sparkles },
+  {
+    href: "/app/tutor",
+    label: "AI Tutor",
+    shortLabel: "Tutor",
+    icon: Sparkles,
+    comingSoon: !AI_TUTOR_ENABLED,
+  },
   { href: "/app/progress", label: "Progress", icon: TrendingUp },
 ];
 

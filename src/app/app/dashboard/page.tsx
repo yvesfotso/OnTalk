@@ -18,6 +18,7 @@ import {
   pickRecommendedLesson,
 } from "@/features/lessons/queries";
 import { getLearnerCounts, getRecentActivity, getTodayActivity } from "@/features/progress/queries";
+import { AI_TUTOR_ENABLED } from "@/lib/constants/app";
 import { getSessionContext } from "@/lib/supabase/server";
 
 export const metadata: Metadata = {
@@ -258,8 +259,13 @@ export default async function DashboardPage() {
           href="/app/tutor"
           icon={Sparkles}
           title="Practice with your AI tutor"
-          description="Ask a question or just have a chat in English."
-          cta="Start a conversation"
+          description={
+            AI_TUTOR_ENABLED
+              ? "Ask a question or just have a chat in English."
+              : "On the way — chat practice that adapts to your level."
+          }
+          cta={AI_TUTOR_ENABLED ? "Start a conversation" : "See what's coming"}
+          badge={AI_TUTOR_ENABLED ? undefined : "Soon"}
         />
       </section>
     </div>
@@ -311,22 +317,27 @@ function ActionCard({
   title,
   description,
   cta,
+  badge,
 }: {
   href: string;
   icon: typeof BookOpen;
   title: string;
   description: string;
   cta: string;
+  badge?: string;
 }) {
   return (
     <InteractiveCard className="h-full">
       <Link href={href} className="flex h-full flex-col rounded-card p-5">
-        <span
-          className="grid size-10 place-items-center rounded-2xl bg-primary-subtle text-primary"
-          aria-hidden
-        >
-          <Icon className="size-5" />
-        </span>
+        <div className="flex items-start justify-between gap-2">
+          <span
+            className="grid size-10 place-items-center rounded-2xl bg-primary-subtle text-primary"
+            aria-hidden
+          >
+            <Icon className="size-5" />
+          </span>
+          {badge && <Badge tone="primary">{badge}</Badge>}
+        </div>
         <h3 className="mt-3 text-base font-semibold">{title}</h3>
         <p className="mt-1 flex-1 text-sm text-muted-foreground">{description}</p>
         <span className="mt-4 inline-flex items-center gap-1 text-sm font-medium text-primary">

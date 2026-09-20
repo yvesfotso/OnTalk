@@ -14,7 +14,7 @@ import { ButtonLink } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardBody } from "@/components/ui/card";
 import { ProgressBar } from "@/components/ui/progress-bar";
-import { APP, CEFR_LEVELS, LEVEL_LABELS, PLANS } from "@/lib/constants/app";
+import { AI_TUTOR_ENABLED, APP, CEFR_LEVELS, LEVEL_LABELS, PLANS } from "@/lib/constants/app";
 
 // No `title` here: the root layout's `title.default` already provides the
 // exact SEO title for this page. Setting one would apply the `%s · OnTalk`
@@ -47,6 +47,7 @@ const FEATURES = [
     title: "AI English Tutor",
     description:
       "Chat, get grammar coaching, or run a mock interview with a tutor that adapts to your level.",
+    comingSoon: !AI_TUTOR_ENABLED,
   },
   {
     icon: TrendingUp,
@@ -127,12 +128,17 @@ export default function LandingPage() {
           <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {FEATURES.map((feature) => (
               <Card key={feature.title} className="p-6">
-                <span
-                  className="grid size-11 place-items-center rounded-xl bg-primary-subtle text-primary"
-                  aria-hidden
-                >
-                  <feature.icon className="size-5" />
-                </span>
+                <div className="flex items-start justify-between gap-2">
+                  <span
+                    className="grid size-11 place-items-center rounded-xl bg-primary-subtle text-primary"
+                    aria-hidden
+                  >
+                    <feature.icon className="size-5" />
+                  </span>
+                  {"comingSoon" in feature && feature.comingSoon && (
+                    <Badge tone="primary">Coming soon</Badge>
+                  )}
+                </div>
                 <h3 className="mt-4 text-base font-semibold">{feature.title}</h3>
                 <p className="mt-1.5 text-sm text-muted-foreground">
                   {feature.description}
