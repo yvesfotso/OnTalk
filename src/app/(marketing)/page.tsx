@@ -1,5 +1,6 @@
 import {
   BookOpen,
+  Check,
   ChevronRight,
   GraduationCap,
   Mic,
@@ -9,6 +10,7 @@ import {
 } from "lucide-react";
 import type { Metadata } from "next";
 
+import { LearnerIllustration } from "@/components/marketing/learner-illustration";
 import { PhoneShowcase } from "@/components/marketing/phone-showcase";
 import { ButtonLink } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -174,6 +176,45 @@ export default function LandingPage() {
       </section>
 
       <section className="border-t border-border bg-surface py-16 sm:py-24">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6">
+          <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
+            <LearnerIllustration className="mx-auto w-full max-w-sm" />
+            <div>
+              <h2 className="text-3xl font-semibold tracking-tight">
+                Practice fits into the time you already have
+              </h2>
+              <p className="mt-4 text-muted-foreground">
+                No classroom, no schedule to plan around. Open OnTalk on your
+                phone during a commute, a coffee break, or the last ten
+                minutes before bed, and pick up exactly where you left off.
+              </p>
+              <ul className="mt-6 space-y-3">
+                {[
+                  "Short lessons that fit a spare five minutes",
+                  "Vocabulary review that adapts to what you're forgetting",
+                  "Speaking practice you can do quietly, headphones in",
+                ].map((item) => (
+                  <li key={item} className="flex items-start gap-2.5 text-sm text-foreground">
+                    <span
+                      className="mt-0.5 grid size-5 shrink-0 place-items-center rounded-full bg-primary-subtle text-primary"
+                      aria-hidden
+                    >
+                      <Check className="size-3" />
+                    </span>
+                    {item}
+                  </li>
+                ))}
+              </ul>
+              <ButtonLink href="/register" className="mt-7">
+                Start Learning Free
+                <ChevronRight className="size-4" aria-hidden />
+              </ButtonLink>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="py-16 sm:py-24">
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <div className="mx-auto max-w-xl text-center">
             <h2 className="text-3xl font-semibold tracking-tight">
