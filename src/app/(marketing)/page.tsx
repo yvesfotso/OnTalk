@@ -1,7 +1,6 @@
 import {
   BookOpen,
   ChevronRight,
-  Flame,
   GraduationCap,
   Mic,
   Sparkles,
@@ -10,10 +9,10 @@ import {
 } from "lucide-react";
 import type { Metadata } from "next";
 
+import { PhoneShowcase } from "@/components/marketing/phone-showcase";
 import { ButtonLink } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardBody } from "@/components/ui/card";
-import { ProgressBar } from "@/components/ui/progress-bar";
 import { AI_TUTOR_ENABLED, APP, CEFR_LEVELS, LEVEL_LABELS, PLANS } from "@/lib/constants/app";
 
 // No `title` here: the root layout's `title.default` already provides the
@@ -110,7 +109,7 @@ export default function LandingPage() {
             </div>
           </div>
 
-          <DashboardPreview />
+          <PhoneShowcase />
         </div>
       </section>
 
@@ -308,83 +307,3 @@ export default function LandingPage() {
   );
 }
 
-function DashboardPreview() {
-  return (
-    <div className="relative" aria-hidden>
-      <Card className="animate-rise p-5 shadow-pop sm:p-6">
-        <div className="flex items-center justify-between">
-          <div>
-            <p className="text-sm text-muted-foreground">Good morning, Ana 👋</p>
-            <p className="text-base font-semibold">Ready for today&apos;s practice?</p>
-          </div>
-          <Badge tone="primary">Level A2</Badge>
-        </div>
-
-        <div className="mt-5 grid grid-cols-3 gap-2">
-          <MiniStat icon={Flame} value="12" label="streak" />
-          <MiniStat icon={Zap} value="860" label="XP" />
-          <MiniStat icon={GraduationCap} value="9" label="lessons" />
-        </div>
-
-        <div className="mt-5 rounded-xl border border-border bg-subtle p-4">
-          <p className="flex items-center gap-1.5 text-xs font-semibold text-primary">
-            <Badge tone="primary" size="sm">
-              A2
-            </Badge>
-            Continue Learning
-          </p>
-          <p className="mt-2 text-sm font-semibold">
-            Ordering Food at a Restaurant
-          </p>
-          <ProgressBar value={60} size="sm" className="mt-3" hideValue />
-        </div>
-
-        <div className="mt-3 grid grid-cols-2 gap-2">
-          <div className="rounded-xl border border-border bg-background p-3">
-            <p className="flex items-center gap-1.5 text-xs font-medium text-muted-foreground">
-              <BookOpen className="size-3.5" />
-              Vocabulary
-            </p>
-            <p className="mt-1 text-sm font-semibold">12 words due</p>
-          </div>
-          <div className="rounded-xl border border-border bg-background p-3">
-            <p className="flex items-center gap-1.5 text-xs font-medium text-muted-foreground">
-              <Mic className="size-3.5" />
-              Speaking
-            </p>
-            <p className="mt-1 text-sm font-semibold">5-minute practice</p>
-          </div>
-        </div>
-      </Card>
-
-      <Card className="absolute -bottom-6 -left-6 hidden w-48 p-4 shadow-pop sm:block">
-        <p className="flex items-center gap-1.5 text-xs font-medium text-primary">
-          <Sparkles className="size-3.5" />
-          AI Tutor
-        </p>
-        <p className="mt-1.5 text-xs text-muted-foreground">
-          &ldquo;Nice! One small correction: try <em>&apos;I&apos;d like&apos;</em>{" "}
-          instead of <em>&apos;I want&apos;</em>.&rdquo;
-        </p>
-      </Card>
-    </div>
-  );
-}
-
-function MiniStat({
-  icon: Icon,
-  value,
-  label,
-}: {
-  icon: typeof Flame;
-  value: string;
-  label: string;
-}) {
-  return (
-    <div className="rounded-xl border border-border bg-subtle px-2 py-2.5 text-center">
-      <Icon className="mx-auto size-4 text-accent" />
-      <p className="mt-1 text-sm font-semibold tabular-nums">{value}</p>
-      <p className="text-[11px] text-muted-foreground">{label}</p>
-    </div>
-  );
-}
