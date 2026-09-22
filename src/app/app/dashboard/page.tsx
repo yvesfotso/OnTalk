@@ -166,8 +166,8 @@ export default async function DashboardPage() {
         </section>
       </div>
 
-      <div className="grid gap-4 lg:grid-cols-3">
-        <div className="space-y-4">
+      <div className="grid min-w-0 gap-4 lg:grid-cols-3">
+        <div className="min-w-0 space-y-4">
           <Card className="p-4 sm:p-5">
             <div className="flex items-start gap-3">
               <span
@@ -194,7 +194,7 @@ export default async function DashboardPage() {
           <StatCard label="Lessons done" value={lessonsCompleted} icon={GraduationCap} tone="success" />
         </div>
 
-        <section className="lg:col-span-2" aria-label="Lessons">
+        <section className="min-w-0 lg:col-span-2" aria-label="Lessons">
           {tableLessons.length === 0 ? (
             <EmptyState
               icon={GraduationCap}
