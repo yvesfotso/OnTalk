@@ -8,7 +8,7 @@ export function LogoMark({ className }: { className?: string }) {
   return (
     <span
       className={cn(
-        "grid size-8 shrink-0 place-items-center rounded-lg bg-primary text-primary-foreground",
+        "grid size-9 shrink-0 place-items-center rounded-2xl bg-primary text-primary-foreground shadow-card",
         className,
       )}
       aria-hidden

@@ -66,14 +66,14 @@ export default async function DashboardPage() {
     : lessons;
 
   return (
-    <div className="space-y-6">
-      <header className="flex flex-wrap items-center justify-between gap-4">
+    <div className="space-y-7">
+      <header className="flex flex-wrap items-center justify-between gap-4 rounded-card border border-border/70 bg-surface px-5 py-5 shadow-card sm:px-7 sm:py-6">
         <div>
           <h1 className="text-2xl font-semibold tracking-tight sm:text-3xl">
-            {greeting()}, {profile.display_name} 👋
+            {greeting()}, {profile.display_name}
           </h1>
           <p className="mt-1 text-sm text-muted-foreground">
-            Control your streak, XP, and daily practice.
+            A steady rhythm is all it takes. Here&apos;s your learning at a glance.
           </p>
         </div>
         <div className="flex items-center gap-2">
