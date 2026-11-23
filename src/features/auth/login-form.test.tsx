@@ -50,6 +50,21 @@ describe("LoginForm", () => {
     await waitFor(() => expect(replace).toHaveBeenCalledWith("/app/dashboard"));
   });
 
+  it("shows a helpful error when the sign-in request fails unexpectedly", async () => {
+    signInAction.mockRejectedValueOnce(new Error("Network unavailable"));
+    const user = userEvent.setup();
+    render(<LoginForm />);
+
+    await user.type(screen.getByLabelText(/email/i), "ana@example.com");
+    await user.type(screen.getByLabelText(/password/i), "secret123");
+    await user.click(screen.getByRole("button", { name: /sign in/i }));
+
+    expect(
+      await screen.findByText(/couldn't sign you in right now/i),
+    ).toBeInTheDocument();
+    expect(replace).not.toHaveBeenCalled();
+  });
+
   it("shows the server error message and does not redirect on failure", async () => {
     signInAction.mockResolvedValueOnce({
       error: "Your email or password is incorrect.",

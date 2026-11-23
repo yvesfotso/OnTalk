@@ -100,18 +100,18 @@ const FAQS = [
 export default function LandingPage() {
   return (
     <>
-      <section className="mx-auto max-w-6xl px-4 pt-14 pb-16 sm:px-6 sm:pt-20 sm:pb-24">
-        <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-8">
-          <div>
+      <section className="relative overflow-hidden border-b border-border/70 bg-background">
+        <div className="mx-auto grid max-w-7xl items-center gap-12 px-4 py-16 sm:px-6 sm:py-24 lg:grid-cols-[0.95fr_1.05fr] lg:gap-12 lg:py-28">
+          <div className="relative z-10">
             <Badge tone="primary" size="md">
-              Free to start — no credit card
+              A little practice, a lot of progress
             </Badge>
-            <h1 className="mt-5 text-4xl font-semibold tracking-tight text-foreground sm:text-5xl">
-              Speak English with confidence.
+            <h1 className="mt-6 max-w-xl text-5xl leading-[1.04] font-semibold tracking-[-0.045em] text-foreground sm:text-6xl lg:text-7xl">
+              Make English part of your <span className="text-primary">every day.</span>
             </h1>
-            <p className="mt-4 max-w-lg text-lg leading-relaxed text-muted-foreground">
-              Build your vocabulary, improve your grammar, practice speaking, and
-              learn with an AI tutor — one short lesson at a time.
+            <p className="mt-6 max-w-lg text-lg leading-relaxed text-muted-foreground">
+              Real confidence grows one conversation at a time. Find your rhythm
+              with thoughtful lessons, speaking practice, and words that stick.
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <ButtonLink href="/register" size="lg">
@@ -124,10 +124,10 @@ export default function LandingPage() {
             </div>
           </div>
 
-          <div className="relative" aria-hidden>
-            <span className="absolute top-2 left-6 size-8 rounded-full bg-success-subtle sm:left-10" />
-            <span className="absolute right-8 bottom-6 size-5 rounded-full bg-accent-subtle sm:right-14" />
-            <span className="absolute top-1/3 right-2 size-3 rounded-full bg-primary/40" />
+          <div className="relative rounded-[2rem] bg-[#e7ede3] px-3 py-5 sm:rounded-[2.5rem] sm:px-6 sm:py-8" aria-hidden>
+            <span className="absolute -top-5 left-8 size-12 rounded-full bg-accent-subtle sm:left-12" />
+            <span className="absolute right-3 bottom-8 size-7 rounded-full bg-primary-subtle sm:right-8" />
+            <span className="absolute top-1/3 right-0 size-3 rounded-full bg-primary/40" />
             <PhoneShowcase />
           </div>
         </div>

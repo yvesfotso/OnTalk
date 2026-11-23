@@ -30,7 +30,7 @@ export function MobileHeader({ displayName, xp, streak }: MobileHeaderProps) {
 
   return (
     <>
-      <header className="sticky top-0 z-30 flex h-14 items-center justify-between border-b border-border bg-surface/95 px-4 backdrop-blur-sm lg:hidden">
+      <header className="sticky top-0 z-30 flex h-16 items-center justify-between border-b border-border/70 bg-background/95 px-4 backdrop-blur-sm lg:hidden">
         <Logo href="/app/dashboard" />
 
         <div className="flex items-center gap-3">

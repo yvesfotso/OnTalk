@@ -22,7 +22,7 @@ function NavLink({ item, active }: { item: NavItem; active: boolean }) {
       className={cn(
         "flex items-center gap-3 rounded-full px-4 py-2.5 text-sm font-medium transition-colors",
         active
-          ? "bg-dark text-dark-foreground shadow-card"
+          ? "bg-primary text-primary-foreground shadow-card"
           : "text-muted-foreground hover:bg-subtle hover:text-foreground",
       )}
     >
@@ -52,7 +52,7 @@ export function AppSidebar({ displayName, xp, streak }: AppSidebarProps) {
   const pathname = usePathname();
 
   return (
-    <aside className="fixed inset-y-4 left-4 hidden w-64 flex-col rounded-[2rem] border border-border/60 bg-surface shadow-card lg:flex">
+    <aside className="fixed inset-y-4 left-4 hidden w-64 flex-col rounded-[1.75rem] border border-border/70 bg-surface shadow-card lg:flex">
       <div className="px-5 py-5">
         <Logo href="/app/dashboard" />
       </div>

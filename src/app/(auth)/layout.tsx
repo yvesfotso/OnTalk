@@ -6,7 +6,7 @@ import { APP } from "@/lib/constants/app";
 
 export default function AuthLayout({ children }: { children: ReactNode }) {
   return (
-    <div className="flex min-h-dvh flex-col bg-subtle">
+    <div className="flex min-h-dvh flex-col bg-background">
       <header className="px-4 py-5 sm:px-6">
         <Logo />
       </header>

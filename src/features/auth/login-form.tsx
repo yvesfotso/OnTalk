@@ -34,17 +34,24 @@ export function LoginForm() {
 
   const onSubmit = handleSubmit(async (values) => {
     setFormError(null);
-    const result = await signInAction(values);
+    try {
+      const result = await signInAction(values);
 
-    if (result.error) {
-      setFormError(result.error);
-      return;
+      if (result.error) {
+        setFormError(result.error);
+        return;
+      }
+
+      track("signed_in");
+      const next = searchParams.get("next");
+      const destination = next?.startsWith("/") && !next.startsWith("//")
+        ? next
+        : "/app/dashboard";
+      router.replace(destination);
+      router.refresh();
+    } catch {
+      setFormError("We couldn't sign you in right now. Please try again.");
     }
-
-    track("signed_in");
-    const next = searchParams.get("next");
-    router.replace(next?.startsWith("/") ? next : "/app/dashboard");
-    router.refresh();
   });
 
   return (
